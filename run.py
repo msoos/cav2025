@@ -26,7 +26,8 @@ def main():
 
     parser.add_argument(
         '--rebuild',
-        required=False,
+        action="store_true",
+        default=False,
         help='Rebuild ganak'
     )
 
@@ -36,9 +37,8 @@ def main():
     # Print the parsed arguments
     print(f'Threads: {args.threads}')
     print(f'Run type: {args.run}')
+    print(f'Rebuild: {args.rebuild}')
 
-if __name__ == '__main__':
-    main()
     print(args)
     if args.rebuild:
         print("rebuilding ganak, with ALL dependent libraries except external ones like mlpack, etc.")
@@ -48,7 +48,11 @@ if __name__ == '__main__':
         subprocess.run(["sh", "rebuild_static_all_release.sh"])
         os.chdir("../../run/")
 
-    for i in range args.threads:
-        print(i)
-        #subprocess.run(["sub_runner", args.run, args.threads, "%d" % i])
+    for i in range(0, args.threads):
+        torun=["sub_runner.sh", f"{args.run}", f"{args.threads}", f"{i}"]
+        print(torun)
+        #subprocess.run(torun)
+
+if __name__ == '__main__':
+    main()
 
