@@ -16,11 +16,16 @@ output="out-others"
 tlimit="3600"
 memlimit="45000000"
 
-numthreads=4
+numthreads=$1
+OMPI_COMM_WORLD_RANK=$2
+if [ $# -lt 2 ]; then
+    echo "NEVER use this script on its own!!!"
+    exit 1
+fi
+
 SCRATCH="/home/vboxuser/devel/run"
 SLURM_SUBMIT_DIR=$SCRATCH
 SLURM_JOB_ID="1"
-OMPI_COMM_WORLD_RANK="$1"
 WORKDIR="$SCRATCH/scratch/${SLURM_JOB_ID}_${OMPI_COMM_WORLD_RANK}"
 rm -rf $WORKDIR
 output="${output}-${SLURM_JOB_ID}"
