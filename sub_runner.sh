@@ -34,9 +34,8 @@ files=$(ls ${SLURM_SUBMIT_DIR}/cnfs/${filespos}/*.cnf.gz | shuf --random-source=
 outputdir="${SCRATCH}/outfiles/"
 ln -s ${SLURM_SUBMIT_DIR}/ganak .
 ln -s ${SLURM_SUBMIT_DIR}/mccomp2024 .
-ln -s ${SLURM_SUBMIT_DIR}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin2/flow_cutter_pace17 .
+ln -s ${SLURM_SUBMIT_DIR}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/flow_cutter_pace17 .
 ln -s ${SLURM_SUBMIT_DIR}/doalarm .
-ln -s ${SLURM_SUBMIT_DIR}/runlim .
 ln -s ${SLURM_SUBMIT_DIR}/timeout .
 
 # create todo
