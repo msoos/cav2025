@@ -7,10 +7,14 @@ filespos="all"
 filespos="small"
 
 opts_arr=(
-"ganak"
 "d4"
 "gpmc"
 "SharpSAT-TD"
+"ganak-baseline"
+"ganak-basic-sat-and-chronobt"
+"ganak-also-enhanced-sat"
+"ganak-also-dual-indep"
+"ganak-also-extend-d-set"
 )
 output="out-others"
 tlimit="3600"
@@ -103,10 +107,23 @@ do
                 exec="./mccomp2024/Track1_MC/d4_glucose4/bin/d4"
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_d4 ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_d4 2>&1" >> todo
             fi
-        elif [[ "${opts}" =~ "ganak" ]]; then
-		exec="./ganak --maxcache 5000"
+        elif [[ "${opts}" =~ "ganak-baseline" ]]; then
+		exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0 --optindep 0 --satsolver 0 --chronobt 0"
 		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
-        fi
+        elif [[ "${opts}" =~ "ganak-basic-sat-and-chronobt" ]]; then
+		exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0 --satrst 0 --satpolarcache 0 --satvsids 0"
+		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+        elif [[ "${opts}" =~ "ganak-also-enhanced-sat" ]]; then
+		--arjunverb 2 --maxcache 5000 --optindep 0
+		exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0"
+		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+        elif [[ "${opts}" =~ "ganak-also-dual-indep" ]]; then
+		exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0"
+		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+        elif [[ "${opts}" =~ "ganak-also-extend-d-set" ]]; then
+		exec="./ganak --arjunverb 2 --maxcache 5000"
+		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+	fi
 
         #copy back result
         echo "xz ${baseout}.out*" >> todo
