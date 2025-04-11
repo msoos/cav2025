@@ -5,6 +5,7 @@ shopt -s nullglob
 
 filespos="all"
 filespos="small"
+filespos="partial"
 
 opts_arr=(
 "d4"
@@ -17,11 +18,12 @@ opts_arr=(
 "ganak-also-extend-d-set"
 )
 output="out-others"
-tlimit="3600"
 memlimit="45000000"
 
-numthreads=$1
-OMPI_COMM_WORLD_RANK=$2
+filespos=$1
+numthreads=$2
+tlimit=$3
+OMPI_COMM_WORLD_RANK=$4
 if [ $# -lt 2 ]; then
     echo "NEVER use this script on its own!!!"
     exit 1

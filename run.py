@@ -20,8 +20,15 @@ def main():
     parser.add_argument(
         '--run',
         required=True,
-        choices=['full', 'partial', 'small'],  # Accept specific string values
+        choices=['all', 'partial', 'small'],  # Accept specific string values
         help='Run type: full, partial, or small'
+    )
+
+    parser.add_argument(
+        '--tlimit',
+        type=int
+        default=400
+        help='Timeout'
     )
 
     parser.add_argument(
@@ -49,7 +56,7 @@ def main():
         os.chdir("../../run/")
 
     for i in range(0, args.threads):
-        torun=["sub_runner.sh", f"{args.run}", f"{args.threads}", f"{i}"]
+        torun=["sub_runner.sh", f"{args.run}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
         print(torun)
         #subprocess.run(torun)
 
