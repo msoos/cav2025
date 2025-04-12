@@ -86,7 +86,7 @@ Firstly to assuage any worries: we'll get to reproducing some of these. In the
 meanwhile, let's talk about the logs and the reported values. Please go to the
 directory:
 ```
-/home/vboxuser/devel/ganak/build/data
+cd /home/vboxuser/devel/ganak/build/data
 ```
 
 Here, you will find the directories:
@@ -132,6 +132,7 @@ Then, to get the tables for projected, unprojected, and proj+unproj run, one by 
 and examine the results:
 
 ```
+cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --proj
 [.. examine output and pdf ..]
 ./create_graphs.py --unproj
@@ -146,6 +147,7 @@ ssh'ing in, you can copy the `run.eps` file to your host, and view it.
 
 To get the table for the Ganak ablation study, run:
 ```
+cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --ganak
 ```
 
@@ -154,6 +156,7 @@ You should be able to see that it's identical to the one in the paper.
 
 To get the example CNF table from mccomp2023 track3 benchmark 149, run:
 ```
+cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --example
 ```
 
@@ -162,6 +165,7 @@ This takes the SQLite database, and runs the queries to get the data as per the 
 To get the numbers reported in the paragraph regarding the number of variables,
 S-set, D-set, extension, extension time etc, run:
 ```
+cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --numbers
 ```
 
@@ -213,7 +217,8 @@ is about 8h of wall clock time. You can adjust the number of instances via
 `--num 40` if you are willing to wait 16h, or `--tlimit 1200` if you are
 willing to wait 1200 seconds (20min) per instance. So, e.g.
 ```
-`./run_mccomp2024.py --num 40 --tlimit 1200
+cd /home/vboxuser/run
+./run_mccomp2024.py --num 40 --tlimit 1200
 ```
 will run 40 instances, each for 20min, thereby taking ~32h of wall clock time(!).
 
@@ -241,15 +246,18 @@ All done
 ## Generating the results
 You can examine how things went by looking into the `scratch/0`, `scratch/1`,
 etc. directories, and checking out the corresponding `out_0`, `out_1`, etc.
-text files. The results will be written to the `out-...` directories, just like
-the logs we provided.
+text files. The results will be written to the `/home/vboxuser/run/out-...`
+directories, similarly to the logs we provided.
 
 Now you can run the same scripts as before (it's symlinked here):
 ```
+cd /home/vboxuser/run
 ./get_data_ganak.py
 ```
+
 In order to parse the logs, and create the SQLite database and CSV file. Then:
 ```
+cd /home/vboxuser/run
 ./create_graphs.py --proj
 ./create_graphs.py --unproj
 ./create_graphs.py --all
