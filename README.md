@@ -82,8 +82,10 @@ various configurations of ganak (baseline, etc.). They are full logs, with the
 logfile and the data from the `time` command. For example, these two files in
 `out-also-dual-indep`:
 
+```
 mc2024_track4_188.cnf.gz.out_ganak
 mc2024_track4_188.cnf.gz.timeout_ganak
+```
 
 The first is the output of ganak, the 2nd is the output of the time command. We
 can parse the logs via:
@@ -101,7 +103,7 @@ the CSV file.
 Then, to get the tables for projected, unprojected, and proj+unproj run, one by one,
 and examine the results:
 
-``
+```
 ./create_graphs.py --proj
 ./create_graphs.py --unproj
 ./create_graphs.py --all
@@ -143,7 +145,8 @@ median projected vars:  208
 ```
 
 Which correspond to the numbers reported in the paper, and they are directly
-pulled from the logs, as can be verified by examining the code that prints them.
+pulled from the logs (and the SQLite DB, which we just created from the logs),
+as can be verified by examining the code that prints them.
 
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
