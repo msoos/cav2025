@@ -86,7 +86,7 @@ do
                 wrong=1
             elif [[ "${filename}" =~ "track2" ]]; then
                 exec="./mccomp2024/Track2_WMC/SharpSAT-TD-weighted/bin/sharpSAT -WE -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null-r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
+                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null -r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
             else
                 exec="./mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/sharpSAT -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null -r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
