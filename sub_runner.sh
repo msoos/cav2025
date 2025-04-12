@@ -78,11 +78,12 @@ do
         baseout="${fin_out_dir}/${filename}"
 
         # run
+        wrong=0
         if [[ "${opts}" =~ "sharptd" ]]; then
             if [[ "${filename}" =~ "track4" ]]; then
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
+                wrong=1
             elif [[ "${filename}" =~ "track3" ]]; then
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
+                wrong=1
             elif [[ "${filename}" =~ "track2" ]]; then
                 exec="./mccomp2024/Track2_WMC/SharpSAT-TD-weighted/bin/sharpSAT -WE -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null-r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
@@ -135,14 +136,21 @@ do
             echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         fi
 
-        #copy back result
-        echo "rm -f core.*" >> todo
-
-        echo "mv ${baseout}.out* ${outputdir}/${fin_out_dir}/" >> todo
-        echo "mv ${baseout}.timeout* ${outputdir}/${fin_out_dir}/"  >> todo
-        echo "rm -f ${baseout}*" >> todo
-        echo "rm -f ${filenameunzipped}" >> todo
-        echo "rm -f ${filename}" >> todo
+        if [[ $wrong -eq 1 ]]; then
+            echo "">> todo
+            echo "">> todo
+            echo "">> todo
+            echo "">> todo
+            echo "">> todo
+            echo "">> todo
+        else
+            echo "rm -f core.*" >> todo
+            echo "mv ${baseout}.out* ${outputdir}/${fin_out_dir}/" >> todo
+            echo "mv ${baseout}.timeout* ${outputdir}/${fin_out_dir}/"  >> todo
+            echo "rm -f ${baseout}*" >> todo
+            echo "rm -f ${filenameunzipped}" >> todo
+            echo "rm -f ${filename}" >> todo
+        fi
 
         #lines:
         # 3+1+1+5 = 10
