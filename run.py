@@ -64,14 +64,13 @@ in your host, you need to expose it to the container.")
 
     with open("all_runner.sh", "w") as f:
         f.write("#!/bin/bash\n")
-        f.write('pwd\n')
         f.write('rm -rf scratch\n')
+        f.write('rm -rf tmp\n')
         f.write('rm -rf out*\n')
-        f.write('rm -f all_runner.sh\n')
         for i in range(0, args.threads):
             torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i} &\n"
             f.write(torun)
-            f.write("sleep 1\n")
+            f.write("sleep 0.2\n")
         f.write("wait\n")
         f.write("echo \"All done\"\n")
         f.close()
