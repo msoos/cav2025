@@ -5,3 +5,11 @@ cnfs
 mccomp2024
 tmp
 scratch
+*.sh
+*.py
+*.sql
+*.sqlite
+*.csv
+*gnuplot*
+myrnd
+doalarm
