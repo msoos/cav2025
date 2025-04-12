@@ -60,24 +60,23 @@ in your host, you need to expose it to the container.")
         print("rebuilding ganak, with ALL dependent libraries except external ones like mlpack, etc.")
         subprocess.run(["pwd"])
         os.chdir("../ganak/build/")
-        subprocess.run(["pwd"])
         subprocess.run(["sh", "rebuild_static_all_release.sh"])
         os.chdir("../../run/")
 
-    subprocess.Popen('rm -rf scratch', shell=True)
-    subprocess.Popen('rm -rf out*', shell=True)
-    subprocess.Popen('rm -f all_runner.sh', shell=True)
-
     with open("all_runner.sh", "w") as f:
         f.write("#!/bin/bash\n")
+        f.write('pwd\n')
+        f.write('rm -rf scratch\n')
+        f.write('rm -rf out*\n')
+        f.write('rm -f all_runner.sh\n')
         for i in range(0, args.threads):
             torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i} &\n"
             f.write(torun)
         f.write("wait\n")
         f.write("echo \"All done\"\n")
-    subprocess.Popen("chmod +x all_runner.sh", shell=True)
-    subprocess.Popen("./all_runner.sh", shell=True)
-
+        f.close()
+        print("ok")
+    subprocess.Popen("chmod +x ./all_runner.sh && ./all_runner.sh", shell=True)
     exit(0)
 
 if __name__ == '__main__':
