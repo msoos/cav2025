@@ -125,8 +125,6 @@ do
         fi
 
         #copy back result
-        echo "xz ${baseout}.out*" >> todo
-        echo "xz ${baseout}.timeout*" >> todo
         echo "rm -f core.*" >> todo
 
         echo "mv ${baseout}.out* ${outputdir}/${fin_out_dir}/" >> todo
@@ -136,13 +134,13 @@ do
         echo "rm -f ${filename}" >> todo
 
         #lines:
-        # 3+1+3+5 = 12
+        # 3+1+1+5 = 9
 
         numlines=$((numlines+1))
     done
     let at_opt=at_opt+1
 done
-mylinesper=12
+mylinesper=9
 
 # create per-core todos
 numper=$((numlines/numthreads))
