@@ -114,6 +114,28 @@ To get the example CNF table from mccomp2023 track3 benchmark 149, run:
 ./create_graphs.py --example
 ```
 
+To get the numbers reported in the paragraph regarding the number of variables,
+S-set, D-set, extension, etc, run:
+
+```
+./create_graphs.py --numbers
+```
+
+Which will result in:
+
+```
+median vars:  2297
+median projected vars:  208
++-------------------------+-----------------+---------------------+---------------------+------------------+-----------------------+-----------------------+
+| 'out-also-extend-d-set' | median_indep_sz | median_opt_indep_sz | median_orig_proj_sz | median_new_nvars | median_gates_extended | median_padoa_extended |
++-------------------------+-----------------+---------------------+---------------------+------------------+-----------------------+-----------------------+
+| out-also-extend-d-set   | 89              | 182                 | 208                 | 410              | 9                     | 87                    |
++-------------------------+-----------------+---------------------+---------------------+------------------+-----------------------+-----------------------+
+```
+
+Which correspond to the numbers reported in the paper, and they are directly
+pulled from the logs, as can be verified by examining the code that prints them.
+
 
 You can verify by examining get_data_ganak.py that this indeed deletes the SQL
 databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
