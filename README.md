@@ -4,28 +4,33 @@ which all systems should have that are relatively recent (<6 years old). Unfortu
 virtualbox does NOT emulate instructions the underlying CPU does not have. It's not an
 emulator, it's a hypervisor.
 
-You MUST give at least 64GB of memory and 6 CPU cores to the system. This MUST
-be done via VirtualBox manager -> click on the VM -> settings -> system ->
-processor and memory. If you fail to to this, things will fail to properly if
-you want to re-create results. Unfortunately, our experiments require a lot of
-CPU power, and each instance also requires at least 9GB of memory. Even so, we
-will restrict d4, gpmc and SharpSAT-TD to use 9GM of memory instead of the 45GB
-as per the paper experiments. We will explain this choice later -- but suffice
-to say, unless you are willing to wait for 21 days, and have a machine with 1TB
-of memory and 22 cores, these restrictions are necessary.
+You MUST give at least 64GB of memory and 6 CPU cores to the system if you even
+partially wish to recreate the results. This MUST be done via VirtualBox
+manager -> click on the VM -> settings -> system -> processor and memory. If
+you fail to to this, things will fail in case you want to re-create
+results.
+
+Unfortunately, our experiments require a lot of CPU power, and each
+instance also requires at least 9GB of memory. Even so, we will restrict d4,
+gpmc and SharpSAT-TD to use 9GB of memory instead of the 45GB as per the paper
+experiments. We will explain this choice later -- but suffice to say, unless
+you are willing to wait for 21 days, and have a machine with 1TB of memory and
+22 cores, these restrictions are necessary.
 
 # Logging in
 The user is vboxuser, the hostnamer is vbox, the password is "debian". The root
 password is also "debian". You can "su" to root, and then you can install
 things, if you like.
 
-If you wish to, you can SSH into the system, ssh server is
-started at startup. It's in a NAT, so simply add a NAT redirect, e.g. Host IP
-127.0.0.1, Host port 2222 to Guest IP 10.0.2.15 and port 22. Then on your host,
-you can ssh into the VM using `ssh -p 2222 vbox@127.0.0.1`
+If you wish to, you can SSH into the system, ssh server is started at startup.
+It's in a NAT, so simply add a NAT redirect, e.g. Host IP 127.0.0.1, Host port
+2222 to Guest IP 10.0.2.15 (replace with the IP your vboxmanager provides) and
+port 22. Then on your host, you can ssh into the VM using `ssh -p 2222
+vbox@127.0.0.1`
 
 There is no NEED to ssh in. I find it easier, but you can just use the graphical
-user interface, if you like, run a terminal, etc.
+user interface, if you like, run a terminal, etc. To view the graphs, though,
+you likely want to log in normally, not via ssh.
 
 # Obtaining and building the counters
 Ganak is pre-built, build instructions later. The other counters (d4, gpmc,
@@ -40,12 +45,14 @@ cd /home/vboxuser/ganak/build
 ```
 
 You can examine that script to ensure that indeed everything gets rebuilt from
-source. It builds everything needed, from cadical to cadiback to
-arjun, approxmc, breakid, ganak, etc. All these are provided and publicly
-available. In fact, all of them are a git repository, with public GIT commits.
-You can check them out. All are either MIT or LGPLv2 licensed. In fact, only
-BreakID (more precisely, its bliss library) is LGPLv2, and it's not even used,
-but compiled in. Hence I could the final binary MIT, but currently, it's LGPLv2.
+source. The build script calls other build scripts that wipe all compiled files
+and rebuild everything from scratch. It builds everything needed, from cadical
+to cadiback to arjun, approxmc, breakid, ganak, etc. All these are provided and
+publicly available. In fact, all of them are a git repository, with public GIT
+commits. You can check them out. All are either MIT or LGPLv2 licensed. In
+fact, only BreakID (more precisely, its bliss library) is LGPLv2, and it's not
+even used, but compiled in. Hence I could have the final binary MIT, but
+currently, it's LGPLv2.
 
 # MCComp2024 and MCComp2023 CNF instances
 The CNF instances are in the directories:
