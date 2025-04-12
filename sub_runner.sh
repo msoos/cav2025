@@ -64,6 +64,7 @@ do
         echo "mkdir -p ${outputdir}/${fin_out_dir}" >> todo
         echo "cp ${basedir}/cnfs/${filespos}/${filename} ." >> todo
         echo "gunzip ${filename}" >> todo
+        mkdir -p "${fin_out_dir}"
         baseout="${fin_out_dir}/${filename}"
 
         # run
