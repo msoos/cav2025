@@ -207,8 +207,7 @@ done
 
 # Execute todos
 echo "should execute: ./todo_${rank}.sh > out_${rank}"
-echo "ind dir:"
-echo $(pwd)
-cat ./todo_${rank}.sh
+echo "in dir: $(pwd)"
+# cat ./todo_${rank}.sh
 echo "Finished waiting rank $rank"
 exit 0
