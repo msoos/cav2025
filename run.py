@@ -66,12 +66,18 @@ in your host, you need to expose it to the container.")
 
     subprocess.Popen('rm -rf scratch', shell=True)
     subprocess.Popen('rm -rf out*', shell=True)
+    subprocess.Popen('rm -f all_runner.sh', shell=True)
 
-    for i in range(0, args.threads):
-        torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i}"
-        print(torun)
-        subprocess.Popen(torun+" &" , shell=True)
-    subprocess.Popen("wait" , shell=True)
+    with open("all_runner.sh", "w") as f:
+        f.write("#!/bin/bash\n")
+        for i in range(0, args.threads):
+            torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i} &\n"
+            f.write(torun)
+        f.write("wait\n")
+        f.write("echo \"All done\"\n")
+    subprocess.Popen("chmod +x all_runner.sh", shell=True)
+    subprocess.Popen("./all_runner.sh", shell=True)
+
     exit(0)
 
 if __name__ == '__main__':
