@@ -70,7 +70,7 @@ def main():
     for i in range(0, args.threads):
         torun=["sub_runner.sh", f"{args.num}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
         print(torun)
-        #subprocess.run(torun)
+        subprocess.Popen(" ".join(torun)+" &" , shell=True)
 
 if __name__ == '__main__':
     main()
