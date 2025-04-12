@@ -56,16 +56,23 @@ fact, only BreakID (more precisely, its bliss library) is LGPLv2, and it's not
 even used, but compiled in. Hence I could have the final binary MIT, but
 currently, it's LGPLv2.
 
-There is only one Ganak binary. The different configurations are just different
+Notice that this builds a static 64-bit x86 binary that will run on all Linux
+platforms that have a relatively recent Kernel and SSE4.2 support. In order to
+keep the system 100% as submitted, we have not changed the code, but the newest
+Ganak, as present on GitHub, compiles to everything, including Arm, Mac, and
+even WASM. Hence we find this as reusable as possible, without messing with the
+code that was submitted when the paper was submitted.
+
+There is only one Ganak binary. The different configurations are simply different
 command line arguments, turning off various features. ScalMC is simply Ganak
 with everything turned on, noted as "out-ganak-also-extend-d-set"
 
-**To re-iterate, "out-ganak-also-extend-d-set" is all features turned on, noted
+**Hence, "out-ganak-also-extend-d-set" is all features turned on, noted
 as "ScalMC" in the paper.** We are in fact the original Ganak authors. Baseline
 is simply all new features turned off.
 
 # MCComp2024 and MCComp2023 CNF instances
-The CNF instances are in the directories:
+The MCComp CNF instances are in the directories:
 ```
 /home/vboxuser/run/cnfs/mccomp2023
 /home/vboxuser/run/cnfs/mccomp2024
@@ -84,11 +91,11 @@ directory:
 
 Here, you will find the directories:
 ```
-out-baseline
-out-basic-sat-and-chronobt
-out-also-enhanced-sat
-out-also-dual-indep
-out-also-extend-d-set
+out-ganak-baseline
+out-ganak-basic-sat-and-chronobt
+out-ganak-also-enhanced-sat
+out-ganak-also-dual-indep
+out-ganak-also-extend-d-set
 out-d4
 out-gpmc
 out-sharptd
@@ -96,16 +103,15 @@ out-sharptd
 
 These are the logs for the various counters (d4, gpmc, SharpSAT-TD) and for
 various configurations of ganak (baseline, etc.). They are full logs, with the
-logfile and the data from the `time` command. For example, these two files in
-`out-also-dual-indep`:
-
+logfile and the data from the `/usr/bin/time` command. For example, these two
+files in the directory `/home/vboxuser/devel/ganak/build/data/out-ganak-also-dual-indep`:
 ```
 mc2024_track4_188.cnf.gz.out_ganak
 mc2024_track4_188.cnf.gz.timeout_ganak
 ```
-
-The first is the output of ganak, the 2nd is the output of the time command. We
-can parse the logs via:
+The first is the output of ganak with everything turned on (i.e. "ScalMC"), the
+2nd is the output of the `time` command, which gives accurate memory, time,
+etc. measures. We can parse the logs via:
 
 ```
 cd /home/vboxuser/devel/ganak/build/data
@@ -127,8 +133,11 @@ and examine the results:
 
 ```
 ./create_graphs.py --proj
+[.. examine output and pdf ..]
 ./create_graphs.py --unproj
+[.. examine output and pdf ..]
 ./create_graphs.py --all
+[.. examine output and pdf ..]
 ```
 
 Each will try to launch an `okular run.eps` window with the graph. If you
@@ -152,13 +161,11 @@ This takes the SQLite database, and runs the queries to get the data as per the 
 
 To get the numbers reported in the paragraph regarding the number of variables,
 S-set, D-set, extension, extension time etc, run:
-
 ```
 ./create_graphs.py --numbers
 ```
 
 Which will result in:
-
 ```
 median vars:  2297
 median projected vars:  208
@@ -171,8 +178,8 @@ median projected vars:  208
 
 Which correspond to the numbers reported in the paper, and they are directly
 pulled from the logs (and the SQLite DB, which we just created from the logs),
-as can be verified by examining the code that prints them. Here, "med" means median,
-and "ext" means extension.
+as can be verified by examining the code that prints them. Here, "med" means
+median, and "ext" means extension.
 
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
