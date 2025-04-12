@@ -34,10 +34,21 @@ WORKDIR="${basedir}/scratch/${rank}"
 mkdir -p "${WORKDIR}"
 cd "${WORKDIR}" || exit 1
 mkdir -p "tmp_dir"
-
+echo "num files to run: $num (each from proj and unproj)"
+echo "time limit: $tlimit"
+echo "num threads total: $numthreads"
+echo "this thread num: $rank"
 files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files2=$(ls ${basedir}/cnfs/unproj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files=(${files1} ${files2})
+if [[ "${rank}" =~ "0" ]]; then
+	echo "will run files:"
+	for file in "${files[@]}"
+	do
+		echo "$file"
+	done
+fi
+
 outputdir="${basedir}"
 # rm -rf ${outputdir}/out*
 ln -s ${basedir}/ganak .
@@ -54,7 +65,7 @@ do
     fin_out_dir="${output}-${opts}"
     # rm -rf ${fin_out_dir}
     # rm -rf "${outputdir}/${fin_out_dir}"
-    for file in $files
+    for file in "${files[@]}"
     do
         filename=$(basename "$file")
         filenameunzipped=${filename%.gz}
@@ -208,7 +219,6 @@ done
 # Execute todos
 echo "should execute: ./todo_${rank}.sh > out_${rank}"
 echo "in dir: $(pwd)"
-./todo_${rank}.sh > out_${rank}
+# ./todo_${rank}.sh > out_${rank}
 # cat ./todo_${rank}.sh
 echo "Finished waiting rank $rank"
-exit 0

@@ -71,6 +71,7 @@ in your host, you need to expose it to the container.")
         torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i}"
         print(torun)
         subprocess.Popen(torun+" &" , shell=True)
+    exit(0)
 
 if __name__ == '__main__':
     main()
