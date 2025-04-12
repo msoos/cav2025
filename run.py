@@ -69,9 +69,9 @@ in your host, you need to expose it to the container.")
 
 
     for i in range(0, args.threads):
-        torun=["sub_runner.sh", f"{args.num}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
+        torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i}"
         print(torun)
-        subprocess.Popen(" ".join(torun)+" &" , shell=True)
+        subprocess.Popen(torun+" &" , shell=True)
 
 if __name__ == '__main__':
     main()
