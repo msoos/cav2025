@@ -58,11 +58,11 @@ in your host, you need to expose it to the container.")
     print(args)
     if args.rebuild:
         print("rebuilding ganak, with ALL dependent libraries except external ones like mlpack, etc.")
-        subprocess.run(["pwd"])
         os.chdir("../ganak/build/")
         subprocess.run(["sh", "rebuild_static_all_release.sh"])
         os.chdir("../../run/")
 
+    os.unlink("all_runner.sh")
     with open("all_runner.sh", "w") as f:
         f.write("#!/bin/bash\n")
         f.write('pwd\n')
@@ -76,9 +76,9 @@ in your host, you need to expose it to the container.")
         f.write("echo \"All done\"\n")
         f.close()
         print("ok")
-    subprocess.Popen("chmod +x ./all_runner.sh && ./all_runner.sh", shell=True)
+    subprocess.run(["chmod", "+x", "./all_runner.sh"])
+    subprocess.run(["./all_runner.sh"])
     exit(0)
 
 if __name__ == '__main__':
     main()
-
