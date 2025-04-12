@@ -68,15 +68,15 @@ do
         # run
         if [[ "${opts}" =~ "sharptd" ]]; then
             if [[ "${filename}" =~ "track4" ]]; then
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./doalarm -t real ${tlimit} echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
+                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
             elif [[ "${filename}" =~ "track3" ]]; then
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./doalarm -t real ${tlimit} echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
+                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
             elif [[ "${filename}" =~ "track2" ]]; then
                 exec="./mccomp2024/Track2_WMC/SharpSAT-TD-weighted/bin/sharpSAT -WE -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
+                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null-r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
             else
                 exec="./mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/sharpSAT -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
-                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
+                echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null -r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
             fi
         elif [[ "${opts}" =~ "gpmc" ]]; then
             if [[ "${filename}" =~ "track4" ]]; then
