@@ -8,14 +8,14 @@ filespos="all"
 opts_arr=(
 "d4"
 "gpmc"
-"SharpSAT-TD"
+"sharptd"
 "ganak-baseline"
 "ganak-basic-sat-and-chronobt"
 "ganak-also-enhanced-sat"
 "ganak-also-dual-indep"
 "ganak-also-extend-d-set"
 )
-output="out-data"
+output="out"
 memlimit="45000000"
 
 filespos="all"
@@ -23,18 +23,16 @@ num=$1
 numthreads=$2
 tlimit=$3
 OMPI_COMM_WORLD_RANK=$4
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
     echo "NEVER use this script on its own!!!"
     exit 1
 fi
 
 basedir="/home/vboxuser/devel/run"
 WORKDIR="$basedir/scratch/${OMPI_COMM_WORLD_RANK}"
-rm -rf $WORKDIR
-
-# echo "Transferring files from server to compute node"
+rm -rf ${WORKDIR}
 mkdir -p "${WORKDIR}"
-cd "${WORKDIR}" || exit
+cd "${WORKDIR}"
 mkdir -p "tmp_dir"
 
 files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
@@ -54,7 +52,7 @@ at_opt=0
 numlines=0
 for opts in "${opts_arr[@]}"
 do
-    fin_out_dir="${output}-${at_opt}"
+    fin_out_dir="${output}-${opts}"
     mkdir -p "${fin_out_dir}" || exit
     for file in $files
     do
@@ -68,7 +66,7 @@ do
         baseout="${fin_out_dir}/${filename}"
 
         # run
-        if [[ "${opts}" =~ "SharpSAT-TD" ]]; then
+        if [[ "${opts}" =~ "sharptd" ]]; then
             if [[ "${filename}" =~ "track4" ]]; then
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./doalarm -t real ${tlimit} echo 'cannot deal wth projected' > ${baseout}.out_sharptd 2>&1" >> todo
             elif [[ "${filename}" =~ "track3" ]]; then
@@ -109,22 +107,22 @@ do
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_d4 ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_d4 2>&1" >> todo
             fi
         elif [[ "${opts}" =~ "ganak-baseline" ]]; then
-		exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0 --optindep 0 --satsolver 0 --chronobt 0"
-		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+            exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0 --optindep 0 --satsolver 0 --chronobt 0"
+            echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-basic-sat-and-chronobt" ]]; then
-		exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0 --satrst 0 --satpolarcache 0 --satvsids 0"
-		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+            exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0 --satrst 0 --satpolarcache 0 --satvsids 0"
+            echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-also-enhanced-sat" ]]; then
-		--arjunverb 2 --maxcache 5000 --optindep 0
-		exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0"
-		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+            --arjunverb 2 --maxcache 5000 --optindep 0
+            exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0"
+            echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-also-dual-indep" ]]; then
-		exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0"
-		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+            exec="./ganak --arjunverb 2 --maxcache 5000 --arjunextend 0"
+            echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-also-extend-d-set" ]]; then
-		exec="./ganak --arjunverb 2 --maxcache 5000"
-		echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
-	fi
+            exec="./ganak --arjunverb 2 --maxcache 5000"
+            echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
+        fi
 
         #copy back result
         echo "xz ${baseout}.out*" >> todo
