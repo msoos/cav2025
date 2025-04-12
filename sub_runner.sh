@@ -16,7 +16,7 @@ opts_arr=(
 "ganak-also-extend-d-set"
 )
 output="out"
-memlimit="45000000"
+memlimit="9000000"
 
 filespos="all"
 num=$1
@@ -61,7 +61,7 @@ do
 
         # create dir
         echo "mkdir -p ${outputdir}/${fin_out_dir}" >> todo
-        echo "cp ${basedir}/inputfiles/${filespos}/${filename} ." >> todo
+        echo "cp ${basedir}/cnfs/${filespos}/${filename} ." >> todo
         echo "gunzip ${filename}" >> todo
         baseout="${fin_out_dir}/${filename}"
 
@@ -134,13 +134,13 @@ do
         echo "rm -f ${filename}" >> todo
 
         #lines:
-        # 3+1+1+5 = 9
+        # 3+1+1+5 = 10
 
         numlines=$((numlines+1))
     done
     let at_opt=at_opt+1
 done
-mylinesper=9
+mylinesper=10
 
 # create per-core todos
 numper=$((numlines/numthreads))
