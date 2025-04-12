@@ -62,7 +62,6 @@ in your host, you need to expose it to the container.")
         subprocess.run(["sh", "rebuild_static_all_release.sh"])
         os.chdir("../../run/")
 
-    os.unlink("all_runner.sh")
     with open("all_runner.sh", "w") as f:
         f.write("#!/bin/bash\n")
         f.write('pwd\n')
@@ -72,6 +71,7 @@ in your host, you need to expose it to the container.")
         for i in range(0, args.threads):
             torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i} &\n"
             f.write(torun)
+            f.write("sleep 1\n")
         f.write("wait\n")
         f.write("echo \"All done\"\n")
         f.close()
