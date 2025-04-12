@@ -247,5 +247,5 @@ In order to parse the logs, and create the SQLite database and CSV file. Then:
 ./create_graphs.py --numbers
 ```
 
-To get the tables and graphs. The `--example` will only work if file
-mc2023_track3_149.cnf is part of the randomly selected instances.
+To get the tables and graphs, as before. The `--example` will only work if file
+mc2023_track3_149.cnf is part of the randomly selected set of instances.
