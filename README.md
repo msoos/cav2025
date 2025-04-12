@@ -86,13 +86,34 @@ mc2024_track4_188.cnf.gz.out_ganak
 mc2024_track4_188.cnf.gz.timeout_ganak
 
 The first is the output of ganak, the 2nd is the output of the time command. We
-can parse and fully recreate the results in the paper via:
+can parse the logs via:
 
 ```
 cd /home/vboxuser/devel/ganak/build/data
 ./get_data_ganak.py
-./create_graphs_ganak.py
 ````
+
+Then, to get the tables for projected, unprojected, and proj+unproj run:
+
+``
+./create_graphs.py --proj
+./create_graphs.py --unproj
+./create_graphs.py --all
+```
+
+To get the table for the Ganak ablation study, run:
+```
+./create_graphs.py --ganak
+```
+
+Each of these will attempt at calling "okular run.eps" to display the graph.
+You should be able to see that it's identical to the one in the paper.
+
+To get the example CNF table from mccomp2023 track3 benchmark 149, run:
+```
+./create_graphs.py --example
+```
+
 
 You can verify by examining get_data_ganak.py that this indeed deletes the SQL
 databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
@@ -123,5 +144,3 @@ indeed we are not misrepresenting the results.
 
 To re-iterate, you MUST give the VM 64GB of memory and 6 cores. Please read the
 introduction on how to do this.
-
-
