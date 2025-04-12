@@ -38,6 +38,8 @@ mkdir -p "tmp_dir"
 files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files2=$(ls ${basedir}/cnfs/unproj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files=(${files1} ${files2})
+echo "files: ${files[@]}"
+exit 0
 outputdir="${basedir}"
 # rm -rf ${outputdir}/out*
 ln -s ${basedir}/ganak .
