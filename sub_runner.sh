@@ -44,7 +44,6 @@ ln -s ${basedir}/ganak .
 ln -s ${basedir}/mccomp2024 .
 ln -s ${basedir}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/flow_cutter_pace17 .
 ln -s ${basedir}/doalarm .
-ln -s ${basedir}/timeout .
 
 # create todo
 # rm -f todo
