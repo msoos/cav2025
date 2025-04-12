@@ -51,7 +51,8 @@ def main():
     print(f"Total memory: {mem / (1024 ** 3):.2f} GB")
     if mem < (8*args.threads) * (1024 ** 3):
         print("ERROR: This is not going to work, you need num_threads * 9 GM of memory")
-        print("ERROR: Please follow instructions in README.md")
+        print("ERROR: Please follow instructions in README.md. It's NOT enough to have that much memory\
+in your host, you need to expose it to the container.")
         exit(1)
 
     print(args)
