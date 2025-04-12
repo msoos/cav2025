@@ -29,7 +29,7 @@ if [ $# -lt 3 ]; then
 fi
 
 basedir="/home/vboxuser/devel/run"
-WORKDIR="$basedir/scratch/${OMPI_COMM_WORLD_RANK}"
+WORKDIR="${basedir}/scratch/${OMPI_COMM_WORLD_RANK}"
 rm -rf ${WORKDIR}
 mkdir -p "${WORKDIR}"
 cd "${WORKDIR}"
