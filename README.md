@@ -95,6 +95,11 @@ cd /home/vboxuser/devel/ganak/build/data
 ./get_data_ganak.py
 ````
 
+Please be _patient_ as this will take a while. It will parse the logs, and
+create an sqlite database, and a CSV file. The CSV file is in the directory
+`/home/vboxuser/devel/ganak/build/data`, and is called `mydata.csv`. The SQLite
+database is called `mydb.sql`, and is in the same directory.
+
 You can verify by examining get_data_ganak.py that this indeed deletes the SQL
 databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
 DATA. Not just Ganak, but all. If you so wish, you can examine the SQL database and
@@ -149,7 +154,8 @@ median projected vars:  208
 
 Which correspond to the numbers reported in the paper, and they are directly
 pulled from the logs (and the SQLite DB, which we just created from the logs),
-as can be verified by examining the code that prints them.
+as can be verified by examining the code that prints them. Here, "med" means median,
+and "ext" means extension.
 
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
