@@ -109,8 +109,11 @@ and examine the results:
 ./create_graphs.py --all
 ```
 
-Each will launch an `okular` window with the graph. To get the table for the
-Ganak ablation study, run:
+Each will try to launch an `okular run.eps` window with the graph. If you
+logged in as vboxuser, via the desktop, it will pop up. If you are
+ssh'ing in, you can copy the `run.eps` file to your host, and view it.
+
+To get the table for the Ganak ablation study, run:
 ```
 ./create_graphs.py --ganak
 ```
