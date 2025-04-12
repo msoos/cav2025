@@ -4,8 +4,6 @@ ulimit -t unlimited
 shopt -s nullglob
 
 filespos="all"
-filespos="small"
-filespos="partial"
 
 opts_arr=(
 "d4"
@@ -17,10 +15,11 @@ opts_arr=(
 "ganak-also-dual-indep"
 "ganak-also-extend-d-set"
 )
-output="out-others"
+output="out-data"
 memlimit="45000000"
 
-filespos=$1
+filespos="all"
+num=$1
 numthreads=$2
 tlimit=$3
 OMPI_COMM_WORLD_RANK=$4
@@ -29,25 +28,25 @@ if [ $# -lt 2 ]; then
     exit 1
 fi
 
-SCRATCH="/home/vboxuser/devel/run"
-SLURM_SUBMIT_DIR=$SCRATCH
-SLURM_JOB_ID="1"
-WORKDIR="$SCRATCH/scratch/${SLURM_JOB_ID}_${OMPI_COMM_WORLD_RANK}"
+basedir="/home/vboxuser/devel/run"
+WORKDIR="$basedir/scratch/${OMPI_COMM_WORLD_RANK}"
 rm -rf $WORKDIR
-output="${output}-${SLURM_JOB_ID}"
 
 # echo "Transferring files from server to compute node"
 mkdir -p "${WORKDIR}"
 cd "${WORKDIR}" || exit
 mkdir -p "tmp_dir"
 
-files=$(ls ${SLURM_SUBMIT_DIR}/cnfs/${filespos}/*.cnf.gz | shuf --random-source=${SCRATCH}/myrnd)
-outputdir="${SCRATCH}/outfiles/"
-ln -s ${SLURM_SUBMIT_DIR}/ganak .
-ln -s ${SLURM_SUBMIT_DIR}/mccomp2024 .
-ln -s ${SLURM_SUBMIT_DIR}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/flow_cutter_pace17 .
-ln -s ${SLURM_SUBMIT_DIR}/doalarm .
-ln -s ${SLURM_SUBMIT_DIR}/timeout .
+files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
+files2=$(ls ${basedir}/cnfs/unproj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
+files=(${files1} ${files2})
+outputdir="${basedir}/outfiles/"
+rm -rf "${outputdir}"
+ln -s ${basedir}/ganak .
+ln -s ${basedir}/mccomp2024 .
+ln -s ${basedir}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/flow_cutter_pace17 .
+ln -s ${basedir}/doalarm .
+ln -s ${basedir}/timeout .
 
 # create todo
 rm -f todo
@@ -64,7 +63,7 @@ do
 
         # create dir
         echo "mkdir -p ${outputdir}/${fin_out_dir}" >> todo
-        echo "cp ${SLURM_SUBMIT_DIR}/inputfiles/${filespos}/${filename} ." >> todo
+        echo "cp ${basedir}/inputfiles/${filespos}/${filename} ." >> todo
         echo "gunzip ${filename}" >> todo
         baseout="${fin_out_dir}/${filename}"
 

@@ -211,6 +211,7 @@ WARNINGS:
 Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
 memory each:
 ```
-./run_mccomp2024.py --num 20 --tlimit 1200
+cd /home/vboxuser/run
+./run.py --num 20 --tlimit 1200
 
 ```

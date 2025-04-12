@@ -7,28 +7,27 @@ def main():
     # Create the parser
     parser = argparse.ArgumentParser(description="Run the system")
 
-    # Add the --threads argument
     parser.add_argument(
         '--threads',
         type=int,
-        required=True,
+        default=6,
         choices=range(1, 17),  # Accept integers from 1 to 16
         help='Number of threads (1-16)'
     )
 
-    # Add the --run argument
     parser.add_argument(
-        '--run',
-        required=True,
-        choices=['all', 'partial', 'small'],  # Accept specific string values
-        help='Run type: full, partial, or small'
+        '--num',
+        required=False,
+        type=int,
+        default=20,
+        help='How many CNFs to run for proj and unproj. So 20 means 20 proj and 20 unproj. Default is 20'
     )
 
     parser.add_argument(
         '--tlimit',
-        type=int
-        default=400
-        help='Timeout'
+        type=int,
+        default=600,
+        help='Timeout in seconds for each CNF. Default is 600'
     )
 
     parser.add_argument(
@@ -43,7 +42,8 @@ def main():
 
     # Print the parsed arguments
     print(f'Threads: {args.threads}')
-    print(f'Run type: {args.run}')
+    print(f'Number of proj and unproj: {args.num}')
+    print(f'Therefore total: {args.num*2}')
     print(f'Rebuild: {args.rebuild}')
 
     print(args)
@@ -56,7 +56,7 @@ def main():
         os.chdir("../../run/")
 
     for i in range(0, args.threads):
-        torun=["sub_runner.sh", f"{args.run}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
+        torun=["sub_runner.sh", f"{args.num}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
         print(torun)
         #subprocess.run(torun)
 
