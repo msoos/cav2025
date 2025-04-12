@@ -22,24 +22,24 @@ filespos="all"
 num=$1
 numthreads=$2
 tlimit=$3
-OMPI_COMM_WORLD_RANK=$4
+rank=$4
 if [ $# -lt 3 ]; then
     echo "NEVER use this script on its own!!!"
     exit 1
 fi
 
 basedir="/home/vboxuser/devel/run"
-WORKDIR="${basedir}/scratch/${OMPI_COMM_WORLD_RANK}"
-rm -rf ${WORKDIR}
+WORKDIR="${basedir}/scratch/${rank}"
+# rm -rf ${WORKDIR}
 mkdir -p "${WORKDIR}"
-cd "${WORKDIR}"
+cd "${WORKDIR}" || exit 1
 mkdir -p "tmp_dir"
 
 files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files2=$(ls ${basedir}/cnfs/unproj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files=(${files1} ${files2})
-outputdir="${basedir}/outfiles/"
-rm -rf "${outputdir}"
+outputdir="${basedir}"
+# rm -rf ${outputdir}/out*
 ln -s ${basedir}/ganak .
 ln -s ${basedir}/mccomp2024 .
 ln -s ${basedir}/mccomp2024/Track1_MC/SharpSAT-TD-unweighted/bin/flow_cutter_pace17 .
@@ -47,13 +47,14 @@ ln -s ${basedir}/doalarm .
 ln -s ${basedir}/timeout .
 
 # create todo
-rm -f todo
+# rm -f todo
 at_opt=0
 numlines=0
 for opts in "${opts_arr[@]}"
 do
     fin_out_dir="${output}-${opts}"
-    mkdir -p "${fin_out_dir}" || exit
+    # rm -rf ${fin_out_dir}
+    # rm -rf "${outputdir}/${fin_out_dir}"
     for file in $files
     do
         filename=$(basename "$file")
@@ -113,7 +114,6 @@ do
             exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0 --satrst 0 --satpolarcache 0 --satvsids 0"
             echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-also-enhanced-sat" ]]; then
-            --arjunverb 2 --maxcache 5000 --optindep 0
             exec="./ganak --arjunverb 2 --maxcache 5000 --optindep 0"
             echo "/usr/bin/time --verbose -o ${baseout}.timeout_ganak ./doalarm -t real ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_ganak 2>&1" >> todo
         elif [[ "${opts}" =~ "ganak-also-dual-indep" ]]; then
@@ -155,7 +155,7 @@ mystart=0
 for ((myi=0; myi < numthreads ; myi++))
 do
     rm -f todo_$myi.sh
-    if [[ $myi -eq $OMPI_COMM_WORLD_RANK ]]; then
+    if [[ $myi -eq $rank ]]; then
         touch todo_$myi.sh
         echo "#!/bin/bash" > todo_$myi.sh
         echo "ulimit -t $moretime" >> todo_$myi.sh
@@ -174,7 +174,7 @@ do
             if [[ $mystart -lt $numlines ]]; then
                 myp=$((numper*mylinesper))
                 mys=$((mystart*mylinesper))
-                if [[ $myi -eq $OMPI_COMM_WORLD_RANK ]]; then
+                if [[ $myi -eq $rank ]]; then
                     head -n $mys todo | tail -n $myp >> todo_$myi.sh
                 fi
             else
@@ -184,7 +184,7 @@ do
                 p=$(( numper-mystart+numlines ))
                 if [[ $p -gt 0 ]]; then
                     myp=$((p*mylinesper))
-                    if [[ $myi -eq $OMPI_COMM_WORLD_RANK ]]; then
+                    if [[ $myi -eq $rank ]]; then
                         head -n $mys todo | tail -n $myp >> todo_$myi.sh
                     fi
                 fi
@@ -194,22 +194,21 @@ do
         if [[ $remain -gt 0 ]]; then
             mys=$((mystart*mylinesper))
             mr=$((remain*mylinesper))
-            if [[ $myi -eq $OMPI_COMM_WORLD_RANK ]]; then
+            if [[ $myi -eq $rank ]]; then
                 head -n $mys todo | tail -n $mr >> todo_$myi.sh
             fi
         fi
     fi
-    if [[ $myi -eq $OMPI_COMM_WORLD_RANK ]]; then
+    if [[ $myi -eq $rank ]]; then
         echo "exit 0" >> todo_$myi.sh
         chmod +x todo_$myi.sh
     fi
 done
 
 # Execute todos
-echo "should execute: ./todo_${OMPI_COMM_WORLD_RANK}.sh > out_${OMPI_COMM_WORLD_RANK}"
+echo "should execute: ./todo_${rank}.sh > out_${rank}"
 echo "ind dir:"
 echo $(pwd)
-cat ./todo_${OMPI_COMM_WORLD_RANK}.sh
-echo "Finished waiting rank $OMPI_COMM_WORLD_RANK"
-
+cat ./todo_${rank}.sh
+echo "Finished waiting rank $rank"
 exit 0

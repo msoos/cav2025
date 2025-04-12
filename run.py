@@ -2,6 +2,7 @@
 import subprocess
 import os
 import argparse
+import psutil
 
 def main():
     # Create the parser
@@ -41,10 +42,17 @@ def main():
     args = parser.parse_args()
 
     # Print the parsed arguments
-    print(f'Threads: {args.threads}')
+    print(f'Number of threads: {args.threads}')
     print(f'Number of proj and unproj: {args.num}')
     print(f'Therefore total: {args.num*2}')
     print(f'Rebuild: {args.rebuild}')
+    print(f'Timeout: {args.tlimit}')
+    mem=psutil.virtual_memory().total  # total physical memory in Bytes
+    print(f"Total memory: {mem / (1024 ** 3):.2f} GB")
+    if mem < (8*args.threads) * (1024 ** 3):
+        print("ERROR: This is not going to work, you need num_threads * 9 GM of memory")
+        print("ERROR: Please follow instructions in README.md")
+        exit(1)
 
     print(args)
     if args.rebuild:
@@ -54,6 +62,10 @@ def main():
         subprocess.run(["pwd"])
         subprocess.run(["sh", "rebuild_static_all_release.sh"])
         os.chdir("../../run/")
+
+    subprocess.Popen('rm -rf scratch', shell=True)
+    subprocess.Popen('rm -rf out', shell=True)
+
 
     for i in range(0, args.threads):
         torun=["sub_runner.sh", f"{args.num}", f"{args.threads}", f"{args.tlimit}", f"{i}"]
