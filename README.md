@@ -33,10 +33,12 @@ user interface, if you like, run a terminal, etc. To view the graphs, though,
 you likely want to log in normally, not via ssh.
 
 # Obtaining and building the counters
-Ganak is pre-built, build instructions later. The other counters (d4, gpmc,
-SharpSAT-TD) cannot and should not be built. Instead, they should be used as
-they have been provided to the Model Counting Competition in 2024 by the
-authors. They are present in the directory /home/vboxuser/run/mccomp2024
+The non-ganak counters (d4, gpmc, SharpSAT-TD) cannot and should not be built.
+Instead, they should be used as they have been provided to the Model Counting
+Competition in 2024 by the authors. They are present in the directory:
+```
+/home/vboxuser/run/mccomp2024
+```
 
 To rebuild Ganak from source:
 ```
@@ -53,6 +55,14 @@ commits. You can check them out. All are either MIT or LGPLv2 licensed. In
 fact, only BreakID (more precisely, its bliss library) is LGPLv2, and it's not
 even used, but compiled in. Hence I could have the final binary MIT, but
 currently, it's LGPLv2.
+
+There is only one Ganak binary. The different configurations are just different
+command line arguments, turning off various features. ScalMC is simply Ganak
+with everything turned on, noted as "out-ganak-also-extend-d-set"
+
+**To re-iterate, "out-ganak-also-extend-d-set" is all features turned on, noted
+as "ScalMC" in the paper.** We are in fact the original Ganak authors. Baseline
+is simply all major new features turned off.
 
 # MCComp2024 and MCComp2023 CNF instances
 The CNF instances are in the directories:
