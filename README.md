@@ -93,7 +93,13 @@ cd /home/vboxuser/devel/ganak/build/data
 ./get_data_ganak.py
 ````
 
-Then, to get the tables for projected, unprojected, and proj+unproj run:
+You can verify by examining get_data_ganak.py that this indeed deletes the SQL
+databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
+DATA. Not just Ganak, but all. If you so wish, you can examine the SQL database and
+the CSV file.
+
+Then, to get the tables for projected, unprojected, and proj+unproj run, one by one,
+and examine the results:
 
 ``
 ./create_graphs.py --proj
@@ -101,12 +107,13 @@ Then, to get the tables for projected, unprojected, and proj+unproj run:
 ./create_graphs.py --all
 ```
 
-To get the table for the Ganak ablation study, run:
+Each will launch an `okular` window with the graph. To get the table for the
+Ganak ablation study, run:
 ```
 ./create_graphs.py --ganak
 ```
 
-Each of these will attempt at calling "okular run.eps" to display the graph.
+Which again will attempt at calling "okular run.eps" to display the graph.
 You should be able to see that it's identical to the one in the paper.
 
 To get the example CNF table from mccomp2023 track3 benchmark 149, run:
@@ -114,8 +121,10 @@ To get the example CNF table from mccomp2023 track3 benchmark 149, run:
 ./create_graphs.py --example
 ```
 
+This takes the SQLite database, and runs the queries to get the data as per the paper.
+
 To get the numbers reported in the paragraph regarding the number of variables,
-S-set, D-set, extension, etc, run:
+S-set, D-set, extension, extension time etc, run:
 
 ```
 ./create_graphs.py --numbers
@@ -126,24 +135,15 @@ Which will result in:
 ```
 median vars:  2297
 median projected vars:  208
-+-----------------+--------------+--------------+--------------------------------------+----------------------------+---------------------------+
-| 'reported data' | median S-set | median D-set | median num vars after simplification | median syntactic extension | median semantic extension |
-+-----------------+--------------+--------------+--------------------------------------+----------------------------+---------------------------+
-| reported data   | 89           | 182          | 410                                  | 9                          | 87                        |
-+-----------------+--------------+--------------+--------------------------------------+----------------------------+---------------------------+
++--------+-----------+-----------+-------------------------+--------------------+-------------------+------------------------+-----------------------+
+| 'data' | med S-set | med D-set | med num vars after simp | med syntactic ext. | med semantic ext. | med syntactic ext t(s) | med semantic ext t(s) |
++--------+-----------+-----------+-------------------------+--------------------+-------------------+------------------------+-----------------------+
+| data   | 89        | 182       | 410                     | 9                  | 87                | 0.26                   | 44.74                 |
++--------+-----------+-----------+-------------------------+--------------------+-------------------+------------------------+-----------------------+
 ```
 
 Which correspond to the numbers reported in the paper, and they are directly
 pulled from the logs, as can be verified by examining the code that prints them.
-
-
-You can verify by examining get_data_ganak.py that this indeed deletes the SQL
-databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
-DATA. Not just Ganak, ALL. If you so wish, you can examine the SQL database and
-the CSV file. The output of the above command will create all the graphs and
-tables reported in the paper. Please check the output, and follow instructions,
-e.g. by running "okular ..." to view the graphs. The tables are pretty-printed
-to the console.
 
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
