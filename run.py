@@ -65,8 +65,7 @@ in your host, you need to expose it to the container.")
         os.chdir("../../run/")
 
     subprocess.Popen('rm -rf scratch', shell=True)
-    subprocess.Popen('rm -rf out', shell=True)
-
+    subprocess.Popen('rm -rf out*', shell=True)
 
     for i in range(0, args.threads):
         torun=f"./sub_runner.sh {args.num} {args.threads} {args.tlimit} {i}"
