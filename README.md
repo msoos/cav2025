@@ -62,7 +62,7 @@ with everything turned on, noted as "out-ganak-also-extend-d-set"
 
 **To re-iterate, "out-ganak-also-extend-d-set" is all features turned on, noted
 as "ScalMC" in the paper.** We are in fact the original Ganak authors. Baseline
-is simply all major new features turned off.
+is simply all new features turned off.
 
 # MCComp2024 and MCComp2023 CNF instances
 The CNF instances are in the directories:
@@ -177,20 +177,20 @@ and "ext" means extension.
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
 each requiring 45GB of memory for 3 of the non-Ganak counters, and 4
-configurations, each requiring 9GB of memory for Ganak. So just to run the 3
-non-Ganak counters, on a machine with 1TB of memory and 22 cores, we'd need 218
-hours, i.e. about 9 days. We'd need an additional 290 hours, or 12 days, to
-rerun Ganak (though that'd "only" require a machine with 22 cores and 200GB of
-RAM). That's likely not possible, partly because 21 days is a bit much to wait,
-and partly because I'm assuming most people don't have a machine with 1TB of
-memory and 22 cores lying around. So I designed the system to run SOME
-of the CNFs for a shorter, 10min runtime.
+configurations, each requiring 9GB of memory for the various Ganak variants. So
+just to run the 3 non-Ganak counters, on a machine with 1TB of memory and 22
+cores, we'd need 218 hours, i.e. about 9 days. We'd need an additional 290
+hours, or 12 days, to rerun Ganak (though that'd "only" require a machine with
+22 cores and 200GB of RAM). That's likely not possible, partly because 21 days
+is a bit much to wait, and partly because I'm assuming most people don't have a
+machine with 1TB of memory and 22 cores lying around. So I designed the system
+to run SOME of the CNFs for a shorter, 10min runtime.
 
 You will REQUIRE a machine with 64GB of memory, and 6 cores, and we'll restrict
 all counters to 9GB of memory. This will NOT reproduce the exact same results,
 but should give some approximation that hopefully will make the results
 acceptable and hint at what we have reported. You are encouraged to compare the
-logs that we have put up, as per above, to the logs that this system creates,
+logs that we have provided, as per above, to the logs that this system creates,
 and verify that they largely match.
 
 To re-iterate, you MUST give the VM 64GB of memory and 6 cores. Please read the
@@ -200,20 +200,17 @@ adjust this in a way that _your_ virtualbox will set it. You must set it.
 The below will take 20 projected and 20 unprojected instances randomly selected
 from the 1600 instances by running shuffle with a specific seed, and head -n 20
 for projected and unprojected instances. So we will be left with 40
-instances*(3 non-ganak counter + 4 ganak configurations)=280 experiments to
+instances*(3 non-Ganak counter + 4 Ganak configurations)=280 experiments to
 run, 10min (600 seconds) each, so that's 46h of runtime, which over 6 cores is
 is about 8h of wall clock time. You can adjust the number of instances via
 `--num 40` if you are willing to wait 16h, or `--tlimit 1200` if you are
-willing to wait 1200 seconds (20min) per instance. So `./run_mccomp2024.py
---num 40 --tlimit 1200` will run 40 instances, each for 20min, thereby taking
-~32h of wall clock time.
+willing to wait 1200 seconds (20min) per instance. So, e.g.
+```
+`./run_mccomp2024.py --num 40 --tlimit 1200
+```
+will run 40 instances, each for 20min, thereby taking ~32h of wall clock time.
 
-WARNINGS:
-* It is not possible to run for less than 5 minutes, because SharpSAT-TD takes 2
-  minutes to run the tree decomposition, which is ran as a separate process, and
-  will stick around, and not terminate. This is an inherent issue of SharpSAT-TD,
-  and I am not allowed to change it, for obvious reasons.
-* The process will NOT terminate its children if you start it and then Ctrl-C.
+WARNING: The process will NOT terminate its children if you start it and then Ctrl-C.
   Instead, it will leave all the counters running, and it will be a mess.
   In this case, reboot the VM, and start it again. If you fail to do this,
   your results will be very wrong and things will go weird.
