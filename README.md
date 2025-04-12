@@ -219,5 +219,33 @@ Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
 memory each:
 ```
 cd /home/vboxuser/run
-./run.py --num 20 --tlimit 1200
+./run.py --num 20 --tlimit 600
 ```
+
+This will run for a while. Eventually, it will finish, writing "All done" to the console:
+```
+Finished waiting rank ...
+Finished waiting rank ...
+All done
+```
+
+You can examine how things went by looking into the `scratch/0`, `scratch/1`,
+etc. directories, and checking out the corresponding `out_0`, `out_1`, etc.
+text files. The results will be written to the `out-...` directories, just like
+the logs we provided.
+
+Now you can run the same scripts as before:
+```
+./get_data_ganak.py
+```
+In order to parse the logs, and create the SQLite database and CSV file. Then:
+```
+./create_graphs.py --proj
+./create_graphs.py --unproj
+./create_graphs.py --all
+./create_graphs.py --ganak
+./create_graphs.py --numbers
+```
+
+To get the tables and graphs. The `--example` will only work if file
+mc2023_track3_149.cnf is part of the randomly selected instances.
