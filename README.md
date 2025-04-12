@@ -215,6 +215,7 @@ Ctrl-C. Instead, it will leave all the counters running, and it will be a mess.
 In this case, reboot the VM, and start it again. If you fail to do this, your
 results will be very wrong and things will go weird.
 
+## Running the experiments
 Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
 memory each:
 ```
@@ -222,19 +223,21 @@ cd /home/vboxuser/run
 ./run.py --num 20 --tlimit 600
 ```
 
-This will run for a while. Eventually, it will finish, writing "All done" to the console:
+This will run for a while. Eventually, it will finish, writing "All done" to
+the console:
 ```
 Finished waiting rank ...
 Finished waiting rank ...
 All done
 ```
 
+## Generating the results
 You can examine how things went by looking into the `scratch/0`, `scratch/1`,
 etc. directories, and checking out the corresponding `out_0`, `out_1`, etc.
 text files. The results will be written to the `out-...` directories, just like
 the logs we provided.
 
-Now you can run the same scripts as before:
+Now you can run the same scripts as before (it's symlinked here):
 ```
 ./get_data_ganak.py
 ```
