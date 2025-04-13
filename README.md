@@ -262,14 +262,26 @@ In order to parse the logs, and create the SQLite database and CSV file. Then:
 ```
 cd /home/vboxuser/run
 ./create_graphs.py --proj
+[.. examine output and eps ..]
 ./create_graphs.py --unproj
+[.. examine output and eps ..]
 ./create_graphs.py --all
+[.. examine output and eps ..]
 ./create_graphs.py --ganak
+[.. examine output and eps ..]
 ./create_graphs.py --numbers
+[.. examine output ..]
+./create_graphs.py --example
+[.. examine output ..]
 ```
 
 To get the tables and graphs, as before. The `--example` will always work,
 as we always add the file `mc2023_track3_149.cnf` to the set.
+
+Some graphs and data will not get generated in case you have assigned
+too little time or too few instances, and e.g. nothing actually
+terminated, or everything ran out of memory, etc. Empty data make for
+bad graphs.
 
 # A note on version numbers
 During the running of the experiments, we ran with two different Ganak
