@@ -48,7 +48,6 @@ if [[ "${rank}" =~ "0" ]]; then
 		echo "$file"
 	done
 fi
-exit
 
 outputdir="${basedir}"
 # rm -rf ${outputdir}/out*
