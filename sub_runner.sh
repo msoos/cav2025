@@ -82,8 +82,10 @@ do
         if [[ "${opts}" =~ "sharptd" ]]; then
             if [[ "${filename}" =~ "track4" ]]; then
                 wrong=1
+                echo "">> todo
             elif [[ "${filename}" =~ "track3" ]]; then
                 wrong=1
+                echo "">> todo
             elif [[ "${filename}" =~ "track2" ]]; then
                 exec="./mccomp2024/Track2_WMC/SharpSAT-TD-weighted/bin/sharpSAT -WE -decot 120 -decow 100 -tmpdir tmp_dir -cs 3500"
                 echo "/usr/bin/time --verbose -o ${baseout}.timeout_sharptd ./runlim -o /dev/null -r ${tlimit} ./${exec} ${filenameunzipped} > ${baseout}.out_sharptd 2>&1" >> todo
@@ -153,7 +155,7 @@ do
         fi
 
         #lines:
-        # 3+1+1+5 = 10
+        # 3+1+6 = 10
 
         numlines=$((numlines+1))
     done
