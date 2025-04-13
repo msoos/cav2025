@@ -119,7 +119,7 @@ out-sharptd
 These are the logs for the various counters (d4, gpmc, SharpSAT-TD) and for
 various configurations of ganak (baseline, etc.). They are full logs, with the
 logfile and the data from the `/usr/bin/time` command. For example, these two
-files in the directory `/home/vboxuser/devel/ganak/build/data/out-ganak-also-dual-indep`:
+files in the directory `/home/vboxuser/devel/ganak/build/data/out-ganak-also-extend-d-set`:
 ```
 mc2024_track4_188.cnf.gz.out_ganak
 mc2024_track4_188.cnf.gz.timeout_ganak
