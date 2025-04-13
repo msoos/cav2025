@@ -267,3 +267,63 @@ cd /home/vboxuser/run
 
 To get the tables and graphs, as before. The `--example` will only work if file
 mc2023_track3_149.cnf is part of the randomly selected set of instances.
+
+# A note on version numbers
+During the running of the experiments, we ran with two different Ganak
+versions that differ only in how the treewidth is printed and whether
+contraction over the independent set during graph generation is controllable
+via the command line. The two versions are:
+```
+dc50a0b26a874db7c50302f48232ca2b02eebe20 -- enhanced
+d622244b9c938bd621980e9eaa286f5766ae40d1 -- original
+```
+
+This change does not influence the results other than what is printed when flow-cutter
+is finished, which we never report on. You can check this via:
+```
+$ cd /home/vboxuser/devel/ganak/
+git diff d622244b9c938bd621980e9eaa286f5766ae40d1 dc50a0b26a874db7c50302f48232ca2b02eebe20 src/
+```
+
+If you take a look at the version numbers in the logfiles:
+```
+$ cd /home/vboxuser/devel/ganak/build/data
+$ grep revision out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o GANAK SHA revision d622244b9c938bd621980e9eaa286f5766ae40d1
+c o GANAK compiled with gcc version 14.2.1 20240910c o CMS revision: 041c090adab92a47c0557edad0a0e0f5f4a6455e
+c o Arjun SHA revision: fec6372dbbc076d455138fb32d64ebf4a2538b52
+c o Arjun SBVA SHA revision: 5912435affe8c77ecf364093cea29e0fc5c1b5cb
+$ grep CaDi out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o CaDiCaL 2.0.0 45850b35836122622a983e637251299cc16f3161
+$ grep Vers out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o Version 0.2.1 d1c1a70a1be6bbc9ac606c356912a0ca70aaa2ec
+```
+
+And while running the system, you will see (you need to generate the results above):
+```
+$ cd /home/vboxuser/devel/run
+$ grep revision out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o GANAK SHA revision fd3ecb36f3f3dc88ea2982f954d491cca3b32133
+c o GANAK compiled with gcc version 12.2.0c o CMS revision: 041c090adab92a47c0557edad0a0e0f5f4a6455e
+c o Arjun SHA revision: fec6372dbbc076d455138fb32d64ebf4a2538b52
+c o Arjun SBVA SHA revision: 5912435affe8c77ecf364093cea29e0fc5c1b5cb
+$ grep CaDi out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o CaDiCaL 2.0.0 45850b35836122622a983e637251299cc16f3161
+$ grep Vers out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+c o Version 0.2.1 d1c1a70a1be6bbc9ac606c356912a0ca70aaa2ec
+```
+
+Where everything matches, except for Ganak. The reason for this is that I
+had to adjust the data gathering scripts so that it's easier for you
+to run things (e.g. "--example"). We can check this:
+```
+cd /home/vboxuser/devel/ganak/
+git diff dc50a0b26a874db7c50302f48232ca2b02eebe20 fd3ecb36f3f3dc88ea2982f954d491cca3b32133 src/
+```
+which will give you an empty list -- no change at all to the code, only the scripts
+under "scripts/" were changed to make it easier for you to run things.
+
+Hence, all code that you are running is matching what was executed in the paper,
+except for the Ganak version, which is only different in immaterial code, and
+helper scripts to extract data, that you are using and is therefore immaterial
+to the behaviour of the system.
