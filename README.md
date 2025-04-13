@@ -281,7 +281,7 @@ d622244b9c938bd621980e9eaa286f5766ae40d1 -- original
 This change does not influence the results other than what is printed when flow-cutter
 is finished, which we never report on. You can check this via:
 ```
-$ cd /home/vboxuser/devel/ganak/
+cd /home/vboxuser/devel/ganak/
 git diff d622244b9c938bd621980e9eaa286f5766ae40d1 dc50a0b26a874db7c50302f48232ca2b02eebe20 src/
 ```
 
@@ -299,18 +299,20 @@ $ grep Vers out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_gana
 c o Version 0.2.1 d1c1a70a1be6bbc9ac606c356912a0ca70aaa2ec
 ```
 
-And while running the system, you will see (you need to generate the results above):
+Let's run an example, to get the version numbers:
 ```
 $ cd /home/vboxuser/devel/run
-$ grep revision out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
-c o GANAK SHA revision fd3ecb36f3f3dc88ea2982f954d491cca3b32133
+$ ./ganak cnfs/all/mc2023_track3_107.cnf.gz > tmp # you have to be patient here, about 20s
+$ grep revision tmp
+c o GANAK SHA revision SOMEVERSION
 c o GANAK compiled with gcc version 12.2.0c o CMS revision: 041c090adab92a47c0557edad0a0e0f5f4a6455e
 c o Arjun SHA revision: fec6372dbbc076d455138fb32d64ebf4a2538b52
 c o Arjun SBVA SHA revision: 5912435affe8c77ecf364093cea29e0fc5c1b5cb
-$ grep CaDi out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+$ grep CaDi tmp
 c o CaDiCaL 2.0.0 45850b35836122622a983e637251299cc16f3161
-$ grep Vers out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
+$ grep Vers tmp
 c o Version 0.2.1 d1c1a70a1be6bbc9ac606c356912a0ca70aaa2ec
+$ rm tmp
 ```
 
 Where everything matches, except for Ganak. The reason for this is that I
@@ -318,7 +320,7 @@ had to adjust the data gathering scripts so that it's easier for you
 to run things (e.g. "--example"). We can check this:
 ```
 cd /home/vboxuser/devel/ganak/
-git diff dc50a0b26a874db7c50302f48232ca2b02eebe20 fd3ecb36f3f3dc88ea2982f954d491cca3b32133 src/
+git diff dc50a0b26a874db7c50302f48232ca2b02eebe20 HEAD src/
 ```
 which will give you an empty list -- no change at all to the code, only the scripts
 under "scripts/" were changed to make it easier for you to run things.
