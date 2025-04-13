@@ -72,6 +72,20 @@ with everything turned on, noted as "out-ganak-also-extend-d-set"
 as "ScalMC" in the paper.** We are in fact the original Ganak authors. Baseline
 is simply all new features turned off.
 
+## Extraneous software needed
+Some software is needed to build Arjun and Ganak, but is not used:
+* ensmallen
+* cereal
+* armadillo
+* breakid
+* approxmc
+* mlpack
+
+These are compiled in, but not used. They are useful for things we don't
+use here. They are all under `/home/vboxuser/devel/` in source-code form,
+and they are all open source. The GNU MP library is also used, and is
+installed via apt-get.
+
 # MCComp2024 and MCComp2023 CNF instances
 The MCComp CNF instances are in the directories:
 ```
