@@ -4,11 +4,13 @@ which all systems should have that are relatively recent (<6 years old).
 Unfortunately virtualbox does NOT emulate instructions the underlying CPU does
 not have. It's not an emulator, it's a hypervisor.
 
-You MUST give at least 64GB of memory and 6 CPU cores to the system if you even
+You SHOULD give 64GB of memory and 6 CPU cores to the system if you even
 partially wish to recreate the results. This MUST be done via VirtualBox
 manager -> click on the VM -> settings -> system -> processor and memory. If
 you fail to to this, things will fail in case you want to re-create
-results.
+results. If you don't have that much memory, please read later -- you can
+run with `--threads 3` and then you only need 30GB, though it will run 2x long
+(for 12 hours instead of 6h).
 
 Unfortunately, our experiments require a lot of CPU power, and each
 instance also requires at least 9GB of memory. Even so, we will restrict d4,
@@ -266,7 +268,11 @@ pretty empty of data.
 
 ## Running the experiments
 Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
-memory each. Notice that we will run 41 instances, as we will add
+memory each. As stated, this requires 64GB of RAM and 6 cores, exposed to the VM.
+If you don't have that, run with --threads K, where K is your memory/9GB.
+It will then run on less cores (and hence longer), but it will run correctly.
+
+Notice that we will run 41 instances, as we will add
 `mc2023_track3_149.cnf` to the set so that `--example` will work:
 ```
 cd /home/vboxuser/devel/run
