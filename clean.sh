@@ -9,4 +9,5 @@ rm -f *.eps
 rm -f mydb.sql
 rm -f *.csv
 rm -f gen_table.sqlite
+rm -rf tmp
 

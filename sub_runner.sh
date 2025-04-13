@@ -40,7 +40,7 @@ echo "num threads total: $numthreads"
 echo "this thread num: $rank"
 files1=$(ls ${basedir}/cnfs/proj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
 files2=$(ls ${basedir}/cnfs/unproj/*.cnf.gz | shuf --random-source=${basedir}/myrnd | head -n ${num})
-files=(${files1} ${files2})
+files=(${files1} ${files2} "/home/vboxuser/devel/run/cnfs/proj/mc2023_track3_149.cnf")
 if [[ "${rank}" =~ "0" ]]; then
 	echo "will run files:"
 	for file in "${files[@]}"
@@ -48,6 +48,7 @@ if [[ "${rank}" =~ "0" ]]; then
 		echo "$file"
 	done
 fi
+exit
 
 outputdir="${basedir}"
 # rm -rf ${outputdir}/out*
