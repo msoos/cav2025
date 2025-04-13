@@ -116,6 +116,7 @@ etc. measures. We can parse the logs via:
 
 ```
 cd /home/vboxuser/devel/ganak/build/data
+./clean.sh # removes ALL parsed logs and data
 ./get_data_ganak.py
 ````
 

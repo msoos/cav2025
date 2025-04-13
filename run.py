@@ -85,7 +85,6 @@ in your host, you need to expose it to the VM.")
         print("ok")
     subprocess.run(["chmod", "+x", "./all_runner.sh"])
     subprocess.run(["./all_runner.sh"])
-    os.unlink("./all_runner.sh")
     exit(0)
 
 if __name__ == '__main__':
