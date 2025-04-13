@@ -220,18 +220,19 @@ is about 8h of wall clock time. You can adjust the number of instances via
 willing to wait 1200 seconds (20min) per instance. So, e.g.
 ```
 cd /home/vboxuser/run
-./run_mccomp2024.py --num 40 --tlimit 1200
+./run.py --num 40 --tlimit 1200
 ```
 will run 40 instances, each for 20min, thereby taking ~32h of wall clock time(!).
 
 WARNING: The process will NOT terminate its children if you start it and then
-Ctrl-C. Instead, it will leave all the counters running, and it will be a mess.
-In this case, reboot the VM, and start it again. If you fail to do this, your
-results will be very wrong and things will go weird.
+Ctrl-C. Instead, it will leave all the counters and shell scripts running, and
+it will be a mess. In this case, reboot the VM, and start `./run.py` again. If you fail
+to do this, your results will be very wrong and things will go weird.
 
 ## Running the experiments
 Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
-memory each:
+memory each. Notice that we will run 41 instances, as we will add
+`mc2023_track3_149.cnf` to the set so that `--example` will work:
 ```
 cd /home/vboxuser/run
 ./run.py --num 20 --tlimit 600
@@ -267,8 +268,8 @@ cd /home/vboxuser/run
 ./create_graphs.py --numbers
 ```
 
-To get the tables and graphs, as before. The `--example` will only work if file
-mc2023_track3_149.cnf is part of the randomly selected set of instances.
+To get the tables and graphs, as before. The `--example` will always work,
+as we always add the file `mc2023_track3_149.cnf` to the set.
 
 # A note on version numbers
 During the running of the experiments, we ran with two different Ganak
