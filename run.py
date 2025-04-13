@@ -3,6 +3,7 @@ import subprocess
 import os
 import argparse
 import psutil
+import multiprocessing
 
 def main():
     # Create the parser
@@ -49,10 +50,17 @@ def main():
     print(f'Timeout: {args.tlimit}')
     mem=psutil.virtual_memory().total  # total physical memory in Bytes
     print(f"Total memory: {mem / (1024 ** 3):.2f} GB")
+    print("CPU cores available: ", multiprocessing.cpu_count())
     if mem < (8*args.threads) * (1024 ** 3):
         print("ERROR: This is not going to work, you need num_threads * 9 GM of memory")
         print("ERROR: Please follow instructions in README.md. It's NOT enough to have that much memory\
-in your host, you need to expose it to the container.")
+in your host, you need to expose it to the VM.")
+        exit(1)
+
+    if args.threads > multiprocessing.cpu_count():
+        print("ERROR: You are trying to use more threads than available CPU cores.")
+        print("ERROR: Please follow instructions in README.md. It's NOT enough to have that many CPUs\
+in your host, you need to expose it to the VM.")
         exit(1)
 
     print(args)

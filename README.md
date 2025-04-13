@@ -1,8 +1,8 @@
 # Overview
 The system is a VirtualBox VM for x64 CPU cores, with at least SSE4.2 support,
-which all systems should have that are relatively recent (<6 years old). Unfortunately
-virtualbox does NOT emulate instructions the underlying CPU does not have. It's not an
-emulator, it's a hypervisor.
+which all systems should have that are relatively recent (<6 years old).
+Unfortunately virtualbox does NOT emulate instructions the underlying CPU does
+not have. It's not an emulator, it's a hypervisor.
 
 You MUST give at least 64GB of memory and 6 CPU cores to the system if you even
 partially wish to recreate the results. This MUST be done via VirtualBox
@@ -23,10 +23,10 @@ password is also "debian". You can "su" to root, and then you can install
 things, if you like.
 
 If you wish to, you can SSH into the system, ssh server is started at startup.
-It's in a NAT, so simply add a NAT redirect, e.g. Host IP 127.0.0.1, Host port
-2222 to Guest IP 10.0.2.15 (replace with the IP your vboxmanager provides) and
-port 22. Then on your host, you can ssh into the VM using `ssh -p 2222
-vbox@127.0.0.1`
+It should be in a NAT, so simply add a NAT redirect, e.g. Host IP 127.0.0.1,
+Host port 2222 to Guest IP 10.0.2.15 (replace with the IP your vboxmanager
+provides) and port 22. Then on your host, you can ssh into the VM using `ssh -p
+2222 vbox@127.0.0.1`
 
 There is no NEED to ssh in. I find it easier, but you can just use the graphical
 user interface, if you like, run a terminal, etc. To view the graphs, though,
@@ -47,9 +47,10 @@ cd /home/vboxuser/ganak/build
 ```
 
 You can examine that script to ensure that indeed everything gets rebuilt from
-source. The build script calls other build scripts that wipe all compiled files
-and rebuild everything from scratch. It builds everything needed, from cadical
-to cadiback to arjun, approxmc, breakid, ganak, etc. All these are provided and
+source that isn't a well-known library like the GNU multiprecision library.
+The build script calls other build scripts that wipe all compiled files
+and rebuild everything from scratch. It builds everything needed, from CaDiCal
+to CadiBack to Arjun, Approxmc, BreakID, Ganak, etc. All these are provided and
 publicly available. In fact, all of them are a git repository, with public GIT
 commits. You can check them out. All are either MIT or LGPLv2 licensed. In
 fact, only BreakID (more precisely, its bliss library) is LGPLv2, and it's not
@@ -57,11 +58,11 @@ even used, but compiled in. Hence I could have the final binary MIT, but
 currently, it's LGPLv2.
 
 Notice that this builds a static 64-bit x86 binary that will run on all Linux
-platforms that have a relatively recent Kernel and SSE4.2 support. In order to
+platforms that have a relatively recent kernel and SSE4.2 support. In order to
 keep the system 100% as submitted, we have not changed the code, but the newest
-Ganak, as present on GitHub, compiles to everything, including Arm, Mac, and
-even WASM. Hence we find this as reusable as possible, without messing with the
-code that was submitted when the paper was submitted.
+Ganak, as present on GitHub (branch "nodonkey"), compiles to everything,
+including Arm, Mac, and even WASM. Hence we find this as reusable as possible,
+without messing with the code that was submitted when the paper was submitted.
 
 There is only one Ganak binary. The different configurations are simply different
 command line arguments, turning off various features. ScalMC is simply Ganak
@@ -134,11 +135,11 @@ and examine the results:
 ```
 cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --proj
-[.. examine output and pdf ..]
+[.. examine output and eps ..]
 ./create_graphs.py --unproj
-[.. examine output and pdf ..]
+[.. examine output and eps ..]
 ./create_graphs.py --all
-[.. examine output and pdf ..]
+[.. examine output and eps ..]
 ```
 
 Each will try to launch an `okular run.eps` window with the graph. If you
@@ -149,6 +150,7 @@ To get the table for the Ganak ablation study, run:
 ```
 cd /home/vboxuser/devel/ganak/build/data
 ./create_graphs.py --ganak
+[.. examine output and eps ..]
 ```
 
 Which again will attempt at calling "okular run.eps" to display the graph.
@@ -183,7 +185,7 @@ median projected vars:  208
 Which correspond to the numbers reported in the paper, and they are directly
 pulled from the logs (and the SQLite DB, which we just created from the logs),
 as can be verified by examining the code that prints them. Here, "med" means
-median, and "ext" means extension.
+median, "t" means time, and "ext" means extension.
 
 # Reproducing the results
 The issue we are faced with is that there are 200*4*2=1600 instances to run,
@@ -194,7 +196,7 @@ cores, we'd need 218 hours, i.e. about 9 days. We'd need an additional 290
 hours, or 12 days, to rerun Ganak (though that'd "only" require a machine with
 22 cores and 200GB of RAM). That's likely not possible, partly because 21 days
 is a bit much to wait, and partly because I'm assuming most people don't have a
-machine with 1TB of memory and 22 cores lying around. So I designed the system
+machine with 1TB of memory and 22 cores. So I designed the system
 to run SOME of the CNFs for a shorter, 10min runtime.
 
 You will REQUIRE a machine with 64GB of memory, and 6 cores, and we'll restrict
@@ -204,7 +206,7 @@ acceptable and hint at what we have reported. You are encouraged to compare the
 logs that we have provided, as per above, to the logs that this system creates,
 and verify that they largely match.
 
-To re-iterate, you MUST give the VM 64GB of memory and 6 cores. Please read the
+To re-iterate, you MUST give the VM 64GB of memory AND 6 cores. Please read the
 introduction on how to do this. Unfortunately, VirtualBox does not allow me to
 adjust this in a way that _your_ virtualbox will set it. You must set it.
 
