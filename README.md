@@ -239,7 +239,7 @@ cd /home/vboxuser/devel/run
 ./run.py --num 20 --tlimit 600
 ```
 
-This will run for a while. Eventually, it will finish, writing "All done" to
+This will run for 6h. Eventually, it will finish, writing "All done" to
 the console:
 ```
 Finished waiting rank ...
