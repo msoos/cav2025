@@ -19,6 +19,28 @@ experiments. We will explain this choice later -- but suffice to say, unless
 you are willing to wait for 21 days, and have a machine with 1TB of memory and
 22 cores, these restrictions are necessary.
 
+# What claims can be replicated
+The system allows you to check that:
+* Ganak and all its dependencies can be (and is) built from source
+* All source code of all dependencies is open-source
+* All binaries of all other counters are provided as they were provided by
+  their authors to the Model Counting Competition 2024
+* All CNF inputs used are provided
+* All scripts for running the tools and parsing the logs are provided
+* All values and graphs in the paper can be reproduced from the logs
+  we provide
+* Versions of all components of Ganak are as per the logs provided
+  (modulo minor changes neeeded to e.g. produce this README)
+* The built binary behaves as per the logs we provided
+* Given the limitations of personal computers, some of the CNFs
+  can be run and the results can be checked to work as
+  expected.
+
+Hence we aim for:
+* Available
+* Functional
+* Reusable
+
 # Logging in
 The user is vboxuser, the hostnamer is vbox, the password is "debian". The root
 password is also "debian". You can "su" to root, and then you can install
