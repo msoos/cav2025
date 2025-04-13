@@ -37,12 +37,12 @@ The non-ganak counters (d4, gpmc, SharpSAT-TD) cannot and should not be built.
 Instead, they should be used as they have been provided to the Model Counting
 Competition in 2024 by the authors. They are present in the directory:
 ```
-/home/vboxuser/run/mccomp2024
+/home/vboxuser/devel/run/mccomp2024
 ```
 
 To rebuild Ganak from source:
 ```
-cd /home/vboxuser/ganak/build
+cd /home/vboxuser/devel/ganak/build
 ./rebuild_static_all_release.sh
 ```
 
@@ -75,11 +75,11 @@ is simply all new features turned off.
 # MCComp2024 and MCComp2023 CNF instances
 The MCComp CNF instances are in the directories:
 ```
-/home/vboxuser/run/cnfs/mccomp2023
-/home/vboxuser/run/cnfs/mccomp2024
+/home/vboxuser/devel/run/cnfs/mccomp2023
+/home/vboxuser/devel/run/cnfs/mccomp2024
 ```
 
-There are also directories here, e.g. `/home/vboxuser/run/cnfs/all` that contain
+There are also directories here, e.g. `/home/vboxuser/devel/run/cnfs/all` that contain
 symlinks to these files.
 
 # The logs and results reported in the paper
@@ -220,7 +220,7 @@ is about 8h of wall clock time. You can adjust the number of instances via
 `--num 40` if you are willing to wait 16h, or `--tlimit 1200` if you are
 willing to wait 1200 seconds (20min) per instance. So, e.g.
 ```
-cd /home/vboxuser/run
+cd /home/vboxuser/devel/run
 ./run.py --num 40 --tlimit 1200
 ```
 will run 40 instances, each for 20min, thereby taking ~32h of wall clock time(!).
@@ -235,7 +235,7 @@ Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
 memory each. Notice that we will run 41 instances, as we will add
 `mc2023_track3_149.cnf` to the set so that `--example` will work:
 ```
-cd /home/vboxuser/run
+cd /home/vboxuser/devel/run
 ./run.py --num 20 --tlimit 600
 ```
 
@@ -255,13 +255,13 @@ directories, similarly to the logs we provided.
 
 Now you can run the same scripts as before (it's symlinked here):
 ```
-cd /home/vboxuser/run
+cd /home/vboxuser/devel/run
 ./get_data_ganak.py
 ```
 
 In order to parse the logs, and create the SQLite database and CSV file. Then:
 ```
-cd /home/vboxuser/run
+cd /home/vboxuser/devel/run
 ./create_graphs.py --proj
 [.. examine output and eps ..]
 ./create_graphs.py --unproj
