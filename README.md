@@ -244,6 +244,26 @@ Ctrl-C. Instead, it will leave all the counters and shell scripts running, and
 it will be a mess. In this case, reboot the VM, and start `./run.py` again. If you fail
 to do this, your results will be very wrong and things will go weird.
 
+## Smoke test
+You can run a smoke test to see if everything is working, by running:
+```
+cd /home/vboxuser/devel/run
+./run.py --num 4 --tlimit 10 --threads 3
+```
+Then when it finishes (in a few minutes):
+```
+cd /home/vboxuser/devel/run
+./get_data_ganak.py
+./create_graphs.py --all
+```
+Most data will be missing, but it should nevertheless print something about
+some problems being solved. If you run it inside the VM's graphical terminal,
+it will also run `okular` to show the graphs. If you run it via ssh, you can
+copy the `run.eps` file to your host, and view it. You can also run
+`./create_graphs.py --proj`, `--unproj`, `--ganak`, etc. to get the various
+data/graphs, although since this is a very short smoke test, it will still be
+pretty empty of data.
+
 ## Running the experiments
 Let's run the default setup, i.e. 20+20 instances, 10min each, 6 cores, 9GB of
 memory each. Notice that we will run 41 instances, as we will add
