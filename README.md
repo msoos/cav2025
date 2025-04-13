@@ -407,3 +407,7 @@ Hence, all code that you are running is matching what was executed in the paper,
 except for the Ganak version, which is only different in immaterial code, and
 helper scripts to extract data, that you are using and is therefore immaterial
 to the behaviour of the executable.
+
+# How correctness was tested
+Testing was done via fuzzing. This is ongoing, not yet published work,
+but nevertheless available at: https://github.com/meelgroup/SharpVelvet
