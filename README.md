@@ -33,7 +33,7 @@ The system allows you to check that:
 * All values and graphs in the paper can be reproduced from the logs
   we provide
 * Versions of all components of Ganak are as per the logs provided
-  (modulo minor changes neeeded to e.g. produce this README)
+  (modulo minor changes needed to e.g. produce this README)
 * The built binary behaves as per the logs we provided
 * Given the limitations of personal computers, some of the CNFs
   can be run and the results can be checked to work as
@@ -77,7 +77,7 @@ You can examine that script to ensure that indeed everything gets rebuilt from
 source that isn't a well-known library like the GNU multiprecision library.
 The build script calls other build scripts that wipe all compiled files
 and rebuild everything from scratch. It builds everything needed, from CaDiCal
-to CadiBack to Arjun, Approxmc, BreakID, Ganak, etc. All these are provided and
+to CadiBack to Arjun, ApproxMC, BreakID, Ganak, etc. All these are provided and
 publicly available. In fact, all of them are a git repository, with public GIT
 commits. You can check them out. All are either MIT or LGPLv2 licensed. In
 fact, only BreakID (more precisely, its bliss library) is LGPLv2, and it's not
@@ -162,12 +162,12 @@ cd /home/vboxuser/devel/ganak/build/data
 ````
 
 Please be _patient_ as this will take a while. It will parse the logs, and
-create an sqlite database, and a CSV file. The CSV file is in the directory
+create an SQLite database, and a CSV file. The CSV file is in the directory
 `/home/vboxuser/devel/ganak/build/data`, and is called `mydata.csv`. The SQLite
 database is called `mydb.sql`, and is in the same directory.
 
 You can verify by examining get_data_ganak.py that this indeed deletes the SQL
-databasea `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
+databases `mydb.sql` and recreates it, along with a CSV file mydata.csv for ALL
 DATA. Not just Ganak, but all. If you so wish, you can examine the SQL database and
 the CSV file.
 
@@ -409,7 +409,7 @@ under "scripts/" were changed to make it easier for you to run things.
 Hence, all code that you are running is matching what was executed in the paper,
 except for the Ganak version, which is only different in immaterial code, and
 helper scripts to extract data, that you are using and is therefore immaterial
-to the behaviour of the executable.
+to the behavior of the executable.
 
 # How correctness was tested
 Testing was done via fuzzing. This is ongoing, not yet published work,
