@@ -1,8 +1,9 @@
 # Overview
-The system is a VirtualBox VM for x64 CPU cores, with at least SSE4.2 support,
+The system is a VirtualBox VM for x86-64 CPU cores, with at least SSE4.2 support,
 which all systems should have that are relatively recent (<6 years old).
 Unfortunately virtualbox does NOT emulate instructions the underlying CPU does
-not have. It's not an emulator, it's a hypervisor.
+not have. It's not an emulator, it's a hypervisor. This means this VM wil NOT
+work on ARM or M1/M2/M3/M4 Apple CPUs.
 
 You SHOULD give 64GB of memory and 6 CPU cores to the system if you even
 partially wish to recreate the results. This MUST be done via VirtualBox
