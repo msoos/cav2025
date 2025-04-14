@@ -21,7 +21,10 @@ you are willing to wait for 21 days, and have a machine with 1TB of memory and
 
 # What claims can be replicated
 The system allows you to check that:
-* Ganak and all its dependencies can be (and is) built from source
+* Ganak and all its dependencies can be (and is) built from source. Note that
+  between Ganak and Ganak2 are only command line options. Ganak2 is simply
+  all features turned on, and Ganak is all features turned off. All in-
+  between configurations are simply command line options.
 * All source code of all dependencies is open-source
 * All binaries of all other counters are provided as they were provided by
   their authors to the Model Counting Competition 2024
@@ -89,11 +92,11 @@ including Arm, Mac, and even WASM. Hence we find this as reusable as possible,
 without messing with the code that was submitted when the paper was submitted.
 
 There is only one Ganak binary. The different configurations are simply different
-command line arguments, turning off various features. ScalMC is simply Ganak
+command line arguments, turning off various features. Ganak2 is simply Ganak
 with everything turned on, noted as "out-ganak-also-extend-d-set"
 
 **Hence, "out-ganak-also-extend-d-set" is all features turned on, noted
-as "ScalMC" in the paper.** We are in fact the original Ganak authors. Baseline
+as "Ganak2" in the paper.** We are in fact the original Ganak authors. Baseline
 is simply all new features turned off.
 
 ## Extraneous software needed
@@ -148,10 +151,10 @@ files in the directory `/home/vboxuser/devel/ganak/build/data/out-ganak-also-ext
 mc2024_track4_188.cnf.gz.out_ganak
 mc2024_track4_188.cnf.gz.timeout_ganak
 ```
-The first is the output of ganak with everything turned on (i.e. "ScalMC"), the
+
+The first is the output of ganak with everything turned on (i.e. "Ganak2"), the
 2nd is the output of the `time` command, which gives accurate memory, time,
 etc. measures. We can parse the logs via:
-
 ```
 cd /home/vboxuser/devel/ganak/build/data
 ./clean.sh # removes ALL parsed logs and data
