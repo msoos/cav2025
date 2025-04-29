@@ -380,6 +380,7 @@ c o CaDiCaL 2.0.0 45850b35836122622a983e637251299cc16f3161
 $ grep Vers out-ganak-also-enhanced-sat/mc2024_track2-random_194.cnf.gz.out_ganak
 c o Version 0.2.1 d1c1a70a1be6bbc9ac606c356912a0ca70aaa2ec
 ```
+(Note: "Version ..." is CadiBack)
 
 Let's run an example, to get the version numbers:
 ```
