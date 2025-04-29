@@ -22,28 +22,28 @@ you are willing to wait for 21 days, and have a machine with 1TB of memory and
 
 # What claims can be replicated
 The system allows you to check that:
-* Ganak and all its dependencies can be (and is) built from source. Note that
+- Ganak and all its dependencies can be (and is) built from source. Note that
   between Ganak and Ganak2 are only command line options. Ganak2 is simply
   all features turned on, and Ganak is all features turned off. All in-
   between configurations are simply command line options.
-* All source code of all dependencies is open-source
-* All binaries of all other counters are provided as they were provided by
+- All source code of all dependencies is open-source
+- All binaries of all other counters are provided as they were provided by
   their authors to the Model Counting Competition 2024
-* All CNF inputs used are provided
-* All scripts for running the tools and parsing the logs are provided
-* All values and graphs in the paper can be reproduced from the logs
+- All CNF inputs used are provided
+- All scripts for running the tools and parsing the logs are provided
+- All values and graphs in the paper can be reproduced from the logs
   we provide
-* Versions of all components of Ganak are as per the logs provided
+- Versions of all components of Ganak are as per the logs provided
   (modulo minor changes needed to e.g. produce this README)
-* The built binary behaves as per the logs we provided
-* Given the limitations of personal computers, some of the CNFs
+- The built binary behaves as per the logs we provided
+- Given the limitations of personal computers, some of the CNFs
   can be run and the results can be checked to work as
   expected.
 
 Hence we aim for:
-* Available
-* Functional
-* Reusable
+- Available
+- Functional
+- Reusable
 
 # Logging in
 The user is vboxuser, the hostnamer is vbox, the password is "debian". The root
@@ -102,12 +102,12 @@ is simply all new features turned off.
 
 ## Extraneous software needed
 Some software is needed to build Arjun and Ganak, but is not used:
-* ensmallen
-* cereal
-* armadillo
-* breakid
-* approxmc
-* mlpack
+- ensmallen
+- cereal
+- armadillo
+- breakid
+- approxmc
+- mlpack
 
 These are compiled in, but not used. They are useful for things we don't
 use here. They are all under `/home/vboxuser/devel/` in source-code form,
@@ -177,11 +177,11 @@ and examine the results:
 
 ```
 cd /home/vboxuser/devel/ganak/build/data
-./create_graphs.py --proj
+./create_graphs_ganak.py --proj
 [.. examine output and eps ..]
-./create_graphs.py --unproj
+./create_graphs_ganak.py --unproj
 [.. examine output and eps ..]
-./create_graphs.py --all
+./create_graphs_ganak.py --all
 [.. examine output and eps ..]
 ```
 
@@ -192,7 +192,7 @@ ssh'ing in, you can copy the `run.eps` file to your host, and view it.
 To get the table for the Ganak ablation study, run:
 ```
 cd /home/vboxuser/devel/ganak/build/data
-./create_graphs.py --ganak
+./create_graphs_ganak.py --ganak
 [.. examine output and eps ..]
 ```
 
@@ -202,7 +202,7 @@ You should be able to see that it's identical to the one in the paper.
 To get the example CNF table from mccomp2023 track3 benchmark 149, run:
 ```
 cd /home/vboxuser/devel/ganak/build/data
-./create_graphs.py --example
+./create_graphs_ganak.py --example
 ```
 
 This takes the SQLite database, and runs the queries to get the data as per the paper.
@@ -211,7 +211,7 @@ To get the numbers reported in the paragraph regarding the number of variables,
 S-set, D-set, extension, extension time etc, run:
 ```
 cd /home/vboxuser/devel/ganak/build/data
-./create_graphs.py --numbers
+./create_graphs_ganak.py --numbers
 ```
 
 Which will result in:
@@ -231,7 +231,7 @@ as can be verified by examining the code that prints them. Here, "med" means
 median, "t" means time, and "ext" means extension.
 
 # Reproducing the results
-The issue we are faced with is that there are 200*4*2=1600 instances to run,
+The issue we are faced with is that there are 200x4x2=1600 instances to run,
 each requiring 45GB of memory for 3 of the non-Ganak counters, and 4
 configurations, each requiring 9GB of memory for the various Ganak variants. So
 just to run the 3 non-Ganak counters, on a machine with 1TB of memory and 22
@@ -256,7 +256,7 @@ adjust this in a way that _your_ virtualbox will set it. You must set it.
 The below will take 20 projected and 20 unprojected instances randomly selected
 from the 1600 instances by running shuffle with a specific seed, and head -n 20
 for projected and unprojected instances. So we will be left with 40
-instances*(3 non-Ganak counter + 4 Ganak configurations)=280 experiments to
+instances x (3 non-Ganak counter + 4 Ganak configurations)=280 experiments to
 run, 10min (600 seconds) each, so that's 46h of runtime, which over 6 cores is
 is about 8h of wall clock time. You can adjust the number of instances via
 `--num 40` if you are willing to wait 16h, or `--tlimit 1200` if you are
@@ -282,13 +282,13 @@ Then when it finishes (in a few minutes):
 ```
 cd /home/vboxuser/devel/run
 ./get_data_ganak.py
-./create_graphs.py --all
+./create_graphs_ganak.py --all
 ```
 Most data will be missing, but it should nevertheless print something about
 some problems being solved. If you run it inside the VM's graphical terminal,
 it will also run `okular` to show the graphs. If you run it via ssh, you can
 copy the `run.eps` file to your host, and view it. You can also run
-`./create_graphs.py --proj`, `--unproj`, `--ganak`, etc. to get the various
+`./create_graphs_ganak.py --proj`, `--unproj`, `--ganak`, etc. to get the various
 data/graphs, although since this is a very short smoke test, it will still be
 pretty empty of data.
 
@@ -328,17 +328,17 @@ cd /home/vboxuser/devel/run
 In order to parse the logs, and create the SQLite database and CSV file. Then:
 ```
 cd /home/vboxuser/devel/run
-./create_graphs.py --proj
+./create_graphs_ganak.py --proj
 [.. examine output and eps ..]
-./create_graphs.py --unproj
+./create_graphs_ganak.py --unproj
 [.. examine output and eps ..]
-./create_graphs.py --all
+./create_graphs_ganak.py --all
 [.. examine output and eps ..]
-./create_graphs.py --ganak
+./create_graphs_ganak.py --ganak
 [.. examine output and eps ..]
-./create_graphs.py --numbers
+./create_graphs_ganak.py --numbers
 [.. examine output ..]
-./create_graphs.py --example
+./create_graphs_ganak.py --example
 [.. examine output ..]
 ```
 
